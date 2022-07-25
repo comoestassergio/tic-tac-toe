@@ -69,6 +69,18 @@ section {
 .game-cell.x, 
 .game-cell.circle {
     cursor: not-allowed;
+
+    animation: mark-appear 200ms ease-out forwards;
+}
+
+@keyframes mark-appear {
+    0% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 .game-cell::before,
@@ -91,6 +103,8 @@ section {
 
     background-color: lightgrey;
     transform: rotate(45deg);
+
+    transition: transform 200ms ease;
 }
 
 .game-cell.x::before,
@@ -100,6 +114,8 @@ section {
 
     background-color: lightgrey;
     transform: rotate(-45deg);
+
+    transition: transform 200ms ease;
 }
 
 .game-cell.circle::before,
@@ -120,25 +136,64 @@ section {
     background-color: white;
     
     border-radius: 50%;
+
+    animation: circle-scale-anim 200ms ease forwards;
+}
+
+@keyframes circle-scale-anim {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 .game-grid.x .game-cell:hover {
 
 }
 
-.clear-btn {
-    border: none;
-    color: black;
-    padding: 1rem 3rem;
+.win-screen {
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    right: 0%;
+    bottom: 0%;
 
-    border-radius: 1rem;
-    font-size: 1.2rem;
+    background-color: rgba(0,0,0, .7);
+    backdrop-filter: blur(5px);
 
-    margin-top: 1rem;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-    cursor: pointer;
+    color: white;
 }
 
-.clear-btn:hover {
-    background-color: rgba(226, 148, 148, 0.507);
+.win-text {
+    font-size: 3rem;
+}
+
+.restart-btn {
+    font-size: 1.75rem;
+    padding: 1rem 2rem;
+
+    border: none;
+    border-radius: 1rem;
+
+    cursor: pointer;
+
+    transition: background-color 200ms ease,
+    color 200ms ease;
+}
+
+.restart-btn:hover {
+    background-color: black;
+    color: white;
+}
+
+.win-screen.visible {
+    display: flex;
 }
