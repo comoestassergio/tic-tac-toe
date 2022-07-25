@@ -150,10 +150,6 @@ section {
     }
 }
 
-.game-grid.x .game-cell:hover {
-
-}
-
 .win-screen {
     position: fixed;
     top: 0%;
