@@ -191,3 +191,23 @@ section {
 .player {
     font-weight: bold;
 }
+
+@media (max-width: 501px) {
+    html, body, main {
+        overflow: hidden;
+    }
+
+    .game-grid {
+        width: 300px;
+        height: 300px;
+    }
+
+    .win-text {
+        font-size: 2rem;
+    }
+
+    .restart-btn {
+        font-size: 1.2rem;
+        color: black;
+    }
+}
