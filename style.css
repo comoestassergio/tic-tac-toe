@@ -80,9 +80,12 @@ section {
 }
 
 .game-cell.x::before,
-.game-cell.x::after,
+.game-cell.x::after{
+    background-color: crimson !important;
+}
+
 .game-cell.circle::before{
-    background-color: black !important;
+    background-color: blueviolet !important;
 }
 
 .game-cell.x::after, 
