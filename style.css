@@ -69,18 +69,6 @@ section {
 .game-cell.x, 
 .game-cell.circle {
     cursor: not-allowed;
-
-    animation: mark-appear 200ms ease-out forwards;
-}
-
-@keyframes mark-appear {
-    0% {
-        transform: scale(1.2);
-    }
-
-    100% {
-        transform: scale(1);
-    }
 }
 
 .game-cell::before,
@@ -158,7 +146,7 @@ section {
     bottom: 0%;
 
     background-color: rgba(0,0,0, .7);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(10px);
 
     display: none;
     flex-direction: column;
@@ -169,7 +157,9 @@ section {
 }
 
 .win-text {
-    font-size: 3rem;
+    font-size: 5rem;
+    font-weight: bold;
+    margin-bottom: 1.75rem;
 }
 
 .restart-btn {
