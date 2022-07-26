@@ -1,4 +1,4 @@
-(function (){
+(function(){
     const game = {
         currentMark: "x",
         WIN_COMBINATIONS: [
@@ -20,7 +20,7 @@
         cacheDom: function() {
             this.board = document.querySelector(".game-grid")
             this.cells = document.querySelectorAll(".game-cell")
-            this.playerEl = document.querySelector(".player-el") 
+            this.playerEl = document.querySelector(".player") 
             this.clearBtn = document.querySelector(".clear-btn")
             this.winScreen = document.querySelector(".win-screen")
         }, 
@@ -51,10 +51,9 @@
         }, 
 
         placeMark: function(cell){
-            if (!cell.classList.contains('x') || !cell.classList.contains('circle')){
-                if(game.board.classList.contains(game.currentMark)){
-                    cell.classList.add(game.currentMark)
-                }
+            if(game.board.classList.contains(game.currentMark)){
+                cell.classList.add(game.currentMark)
+                game.checkForDoubleMark(cell)
             }
 
             //check for win 
@@ -65,6 +64,8 @@
             else if(game.checkDraw()){
                 game.triggerGameOverScreen('draw')
             }
+
+            game.updateTurn()
         },
 
         swapPlayer: function(){
@@ -99,7 +100,7 @@
             const gameOverMsg = document.querySelector('.win-text')
             game.connectButton(restartButton, game.restartGame)
 
-            option === 'win' ? gameOverMsg.textContent = `${this.currentMark} wins!`
+            option === 'win' ? gameOverMsg.textContent = `${this.currentMark === 'x'? 'Player 1': 'Player 2'} wins!`
             : gameOverMsg.textContent = 'Draw!'
         },
 
@@ -109,8 +110,19 @@
 
         restartGame: function(){
             game.startGame()
-        }, 
+        },
+
+        checkForDoubleMark: function(cell){
+            if (cell.classList.length > 2) {
+                cell.classList.remove(cell.classList[cell.classList.length - 1])
+            }
+        },
+
+        updateTurn: function(){
+            game.currentMark === 'x'? game.playerEl.textContent = `Player 2`:
+            game.playerEl.textContent = `Player 1`
+        }
     }
-    
     game.init()
-}())
+})()
+    
