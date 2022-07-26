@@ -15,7 +15,6 @@
         init: function () {
             this.cacheDom()
             this.startGame()
-            this.locateClicks()
         },
     
         cacheDom: function() {
@@ -30,7 +29,11 @@
             const cells = this.cells
 
             cells.forEach(cell => {
-                cell.addEventListener("click", function() {
+                cell.classList.remove("x")
+                cell.classList.remove("circle")
+                cell.removeEventListener('click', function(){})
+
+                cell.addEventListener("click", function(){
                     game.placeMark(cell)
                     game.swapPlayer()
                     game.updateBoardClass()
@@ -40,16 +43,27 @@
 
         startGame: function(){
             this.board.classList.add(this.currentMark)
+            if (game.winScreen.classList.contains("visible")){
+                game.winScreen.classList.toggle("visible")
+            }
+
+            game.locateClicks()
         }, 
 
         placeMark: function(cell){
-            if(game.board.classList.contains(game.currentMark)){
-                cell.classList.add(game.currentMark)
+            if (!cell.classList.contains('x') || !cell.classList.contains('circle')){
+                if(game.board.classList.contains(game.currentMark)){
+                    cell.classList.add(game.currentMark)
+                }
             }
 
             //check for win 
             if(game.checkWin(game.currentMark)){
-                game.triggerWinScreen()
+                game.triggerGameOverScreen('win')
+            }
+            //check for draw
+            else if(game.checkDraw()){
+                game.triggerGameOverScreen('draw')
             }
         },
 
@@ -57,7 +71,7 @@
             if (this.currentMark === "x"){
                 this.currentMark = "circle"
             } else {
-                this.currentMark = "x"
+                this.currentMark = "x" 
             }
         },
 
@@ -75,15 +89,27 @@
             })
         },
 
-        triggerWinScreen: function(){
+        checkDraw: function(){
+            return [...game.cells].every(cell => cell.classList.contains('x')|| cell.classList.contains('circle'))
+        },
+
+        triggerGameOverScreen: function(option){
             game.winScreen.classList.toggle("visible")
+            const restartButton = document.querySelector(".restart-btn")
+            const gameOverMsg = document.querySelector('.win-text')
+            game.connectButton(restartButton, game.restartGame)
+
+            option === 'win' ? gameOverMsg.textContent = `${this.currentMark} wins!`
+            : gameOverMsg.textContent = 'Draw!'
         },
 
         connectButton(button, func){
             button.addEventListener("click", func)
         },
 
-
+        restartGame: function(){
+            game.startGame()
+        }, 
     }
     
     game.init()
